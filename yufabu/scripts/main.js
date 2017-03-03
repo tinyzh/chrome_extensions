@@ -72,6 +72,7 @@ function init(){
 	  if($('#savehm').attr('checked')) {
 		  setCookie();
 	  }else{
+		 
 		  removeCookie(url);
 	  }
 	
@@ -87,6 +88,26 @@ function init(){
   
 }
 document.addEventListener('DOMContentLoaded', function () {
-  init(); 
+  init();
 });
+
+ 
+  
+  var stagingStatus = document.cookie;
+	if(stagingStatus.indexOf('staging=') != -1){
+		
+		var notice = document.createElement('div');
+			notice.innerHTML = '处于预发布环境';
+			notice.style.padding = '5px';
+			notice.style.position = 'fixed';
+			notice.style.left = 0;
+			notice.style.top = 0;
+			notice.style.color = '#fff';
+			notice.style.background = '#ff0000';
+			notice.style.fontSize = '14px';
+			notice.style.zIndex = 9999999999;
+			notice.className = 'yufabu';
+			document.body.appendChild(notice);
+	}
+
 
