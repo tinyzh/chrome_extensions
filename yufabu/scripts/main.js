@@ -118,6 +118,7 @@ function init(){
 	  if($('#savehm').attr('checked')) {
 		  setCookie();
 	  }else{
+		 
 		  removeCookie(url);
 	  }
 	
@@ -136,26 +137,40 @@ document.addEventListener('DOMContentLoaded', function () {
   init();
 });
 
+<<<<<<< HEAD
 // 写入cdn cookie
 function setCdnCookie(value,domain) {
     document.cookie = "cdnname="+value+";path=/;expires=1505720700;domain="+domain;
 };
 
 
+=======
+ 
+  
+>>>>>>> 3338bb2196c12e4ee0b3310cb9183dc693dbda16
   var stagingStatus = document.cookie;
 	if(stagingStatus.indexOf('staging=') != -1){
 		
 		var notice = document.createElement('div');
+<<<<<<< HEAD
 			notice.innerHTML = '预发布';
+=======
+			notice.innerHTML = '处于预发布环境';
+>>>>>>> 3338bb2196c12e4ee0b3310cb9183dc693dbda16
 			notice.style.padding = '5px';
 			notice.style.position = 'fixed';
 			notice.style.left = 0;
 			notice.style.top = 0;
 			notice.style.color = '#fff';
 			notice.style.background = '#ff0000';
+<<<<<<< HEAD
 			notice.style.fontSize = '12px';
 			notice.style.zIndex = 9999999999;
             notice.style.borderRadius = '15px';
+=======
+			notice.style.fontSize = '14px';
+			notice.style.zIndex = 9999999999;
+>>>>>>> 3338bb2196c12e4ee0b3310cb9183dc693dbda16
 			notice.className = 'yufabu';
 			document.body.appendChild(notice);
 	}
