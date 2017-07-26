@@ -16,6 +16,6 @@
    "manifest_version": 2,
    "name": "预发布环境设置",
    "permissions": ["webRequest","notifications", "cookies", "tabs", "http://*/*", "https://*/*","http://www.zaful.com/","<all_urls>" ],
-   "version": "1.1.0",
+   "version": "1.4.0",
    "background": { "scripts": ["scripts/lib/jquery-1.7.2.min.js", "scripts/background.js"] }
 }

@@ -4,10 +4,13 @@ function inYuFaBu() {
     if (Notification.permission !== "granted")
         Notification.requestPermission();
     else {
-        var notification = new Notification('预发布提示', {
-            icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
-            body: "已经进入预发布环境",
+        var notification = new Notification('【进入】预发布', {
+            icon: 'https://tinyzh.github.io/gitcat.jpg'
         });
+
+        setTimeout(function(){
+            notification.close();
+        },1500);
     }
 
 }
@@ -17,10 +20,12 @@ function outYuFaBu() {
     if (Notification.permission !== "granted")
         Notification.requestPermission();
     else {
-        var notification = new Notification('预发布提示', {
-            icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
-            body: "退出预发布环境",
+        var notification = new Notification('【退出】预发布', {
+            icon: 'https://tinyzh.github.io/gitcat.jpg'
         });
+        setTimeout(function(){
+            notification.close();
+        },1500);
     }
 
 }

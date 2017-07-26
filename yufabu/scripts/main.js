@@ -1,6 +1,26 @@
 var  url = '';
 var domain = '';
 var $body = '';
+var staticDomain = '';
+var staticUrl = '';
+
+
+location.href = "javascript:document.body.setAttribute('data-static', JS_IMG_URL);";
+setTimeout(function() {
+    var tempUrl = window.location.href;
+    var tempDomain = '';
+    var regex = /^\w+\:\/\/([^＼/]*).*/;
+    var match = tempUrl.match(regex);
+    if(typeof match != "undefined" && null != match) {
+        var host = match[1];
+        tempDomain = host.split('.');
+        tempDomain.shift();
+        tempDomain = '.' + tempDomain.join('.');
+    }
+    setCdnCookie(document.body.getAttribute('data-static'),tempDomain);
+}, 0);
+
+
 
 
 function getHost(url)
@@ -34,6 +54,17 @@ function setCookie() {
   },function(cookie){
 	  chrome.extension.getBackgroundPage().inYuFaBu();
   });
+
+    chrome.cookies.set({
+        domain: staticDomain,
+        expirationDate: 1505720700,
+        httpOnly: false,
+        name:"cssstaging",
+        path: "/",
+        secure: false,
+        url: staticUrl,
+        value: "true"
+    },function(cookie){});
 }
 
 function removeCookie(url){
@@ -43,10 +74,14 @@ function removeCookie(url){
 	},function () {
 		chrome.extension.getBackgroundPage().outYuFaBu();
 	});
+
+    chrome.cookies.remove({
+        'url':staticUrl,
+        'name':'cssstaging'
+    },function () {});
 }
 
 function initCookie(url) {
-
   var str="";
   chrome.cookies.get({"name": "staging","url":url },function(cookie){
 	  if(cookie){
@@ -54,10 +89,21 @@ function initCookie(url) {
 	  }
 		if(""!=str){
 			$('#savehm').attr("checked",true);
-			chrome.extension.getBackgroundPage().inYuFaBu();
-
 		}
   });
+
+    chrome.cookies.get({"name": "cdnname","url":url},function(cookie){
+        var temp = cookie.value;
+        var regex = /^\w+\:\/\/([^＼/]*).*/;
+        var match = temp.match(regex);
+        if(typeof match != "undefined" && null != match) {
+            var host = match[1];
+            staticDomain = host.split('.');
+            staticDomain.shift();
+            staticDomain = '.' + staticDomain.join('.');
+        }
+        staticUrl = 'http://' + host;
+    });
 }
 
 function init(){
@@ -87,6 +133,31 @@ function init(){
   
 }
 document.addEventListener('DOMContentLoaded', function () {
-  init(); 
+  init();
 });
+
+// 写入cdn cookie
+function setCdnCookie(value,domain) {
+    document.cookie = "cdnname="+value+";path=/;expires=1505720700;domain="+domain;
+};
+
+
+  var stagingStatus = document.cookie;
+	if(stagingStatus.indexOf('staging=') != -1){
+		
+		var notice = document.createElement('div');
+			notice.innerHTML = '预发布';
+			notice.style.padding = '5px';
+			notice.style.position = 'fixed';
+			notice.style.left = 0;
+			notice.style.top = 0;
+			notice.style.color = '#fff';
+			notice.style.background = '#ff0000';
+			notice.style.fontSize = '12px';
+			notice.style.zIndex = 9999999999;
+            notice.style.borderRadius = '15px';
+			notice.className = 'yufabu';
+			document.body.appendChild(notice);
+	}
+
 
